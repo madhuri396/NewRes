@@ -1,0 +1,65 @@
+Hi All, This is Mohammad, todays agenda is to how to prepare for API Testing certification.
+First of all prerequisites:
+->Rest Assured
+->micro services
+->api with microservices
+
+	We also have a rest playgroud to practice for final exam 
+Okay lets start with types of API testing ->Soapui and RestAssure
+Both are similar in most case only few differences are:
+•	User Interface: SoapUI provides a graphical user interface, making it user-friendly for manual testers. Rest Assured is code-based, suitable for developers and automation engineers.
+•	Test Management: SoapUI offers extensive test management features, including test suites and cases. Rest Assured focuses on writing tests in code, providing flexibility and integration with other Java-based tools.
+•	Reporting: SoapUI has built-in reporting features. Rest Assured relies on integration with testing frameworks like JUnit/TestNG for reporting.
+
+Why Rest Assured?
+Rest Assured is a popular open-source Java library used for API testing and validation.
+
+Benefits of using rest assured
+1.	Code-Based Testing: Write tests directly in Java, leveraging IDE features like IntelliSense and debugging.
+2.	Integration with CI/CD: Seamlessly integrates with CI/CD tools like Jenkins, Maven, and Gradle.
+3.	Flexibility and Customization: Highly customizable tests using a domain-specific language (DSL).
+4.	Performance: Faster and more efficient due to Java's performance capabilities.
+5.	Supports Multiple Data Formats: Easily handles JSON and XML data formats
+6.	Strong Community and Support: Extensive documentation and a robust community for support.
+
+Lets see the workflow 
+
+We validate the endpoints by passing the data in form of json or xml format in the form of path variables/query parameters 
+Then we specify the type of method like u wana fetch the data(get), send the data to store(post), if u want to update the data in db(put) and to delete the data(del)
+It will be processed by http request  and the request will be processed and sends response in xml/json as required and
+ we can validate the response example to validate the response code(status code success:200, bad gateway error:502, etc ) using Assert.assertEquals() we can validate
+we can verify if the data response is as expected by extracting the data using jsonpath/xml path
+
+when comes to the exam point of view we will have to ->
+use some methods as required 
+->Get –(getBody,asString(),getContentType(),getSessionId(),getStstusCode(),getStatusLine(),getHeaders(),getDate())
+->read the data from excel and use it in get method to get data from api
+->Post-(read data from excel create a json object and post in the post request )
+->put
+->del
+And we need to verify the data response using json .
+Need to send parameters with url in the methods
+Response response;
+Header h1= new Header(“Accept”,”application/json”); //it is going to accept json format data
+Response= RestAssured.given().header(h1).get(“url”);
+String id = response.getSessionId();
+//u can write same for other methods as response.getContentType(), response.getBody().toString()
+
+
+For get method to pass query variable as 
+Example url= http://localhost:8080/customers/details/byId?custId=1001
+Here /byId?custId=1001 is a query parameter
+
+When we use excel we get it dynamically by using for loop we can store it in variable and pass the variable in the url like 
+String id = formatter.formatCellValue(cell);
+Example url=” http://localhost:8080/customers/details/byId?custId=”+id
+
+When we want to send data in post method we need to create a json object using 
+JSONObject requestParams = new JSONObject();
+Get details from excel sheet and insert into requestParams using for loop
+Ex:
+For(;;;){
+requestParams.put(“patientName”,sheet.getRow(i).getCell(0)
+.getStringCellValue());
+And send it in request as 
+Request.body(requestparams.toString());
